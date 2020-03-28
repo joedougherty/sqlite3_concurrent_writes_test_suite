@@ -1,8 +1,8 @@
 ## Simultating concurrent writes to sqlite3 with multiprocessing and pytest ##
 
-I have a frequently-called process that I would like to record some metrics about itself in a local database. 
+I have a frequently-called process that I would like to record some metrics about. I've decided that the process will report its metrics once it has completed its main tasks. 
 
-I do not expect more than 1000 calls to this process per-day, 
+I do not expect more than 1000 calls to this process per-day.
 
 The schema for the table is simple, the data does not need to be exposed to any other application, and I would like a minimum of connection issues (transient, though they may be). 
 
@@ -39,13 +39,13 @@ That is: how do we test _multiple invocations_ of this function at the same time
 Enter `multiprocessing.Pool.map()`. I'll refer to this as `map()` from here on out.
 
 `map()` has two required arguments: _func_ and _iterable_. (There's a third, optional argument `chunksize` we won't touch on here.) 
-According to its Pyhton3.6 docstring:
+According to its Python3.6 docstring:
 
 	Apply `func` to each element in `iterable`, collecting the results
 	in a list that is returned.
 
 
-`insert_row` is the function that is **applied**. 
+`insert_row` is the function that is **applied** in this case. 
 
 The iterable `args_list` is a list of one-element tuples. Each tuple contains a serialized UUID4 that will be inserted into the sqlite3 db in the `msg` column.
 
@@ -68,7 +68,9 @@ The function `insert_rows_in_parallel` looks like this:
         print(f'{num_procs} processes complete.')
 
 
-The size of the `multiprocessing.Pool` is set by the number of elements in args_list. `generate_example_rows()` is a helper function used to provide sample input data.
+The size of the `multiprocessing.Pool` is set by the number of elements in args_list. 
+
+`generate_example_rows()` is a helper function used to provide sample input data.
 
 Creating a batch of 50 unique test records prepped for database insertion looks like:
 
@@ -153,7 +155,7 @@ This could certainly be done without `pytest`, but I find the conventions make i
 
 ### Conclusion: Will it Do the Trick? ###
 
-I _did_ finally start hitting failures once I started trying to feed it 500 new records. 
+I _did_ finally start hitting failures once I started trying to feed it 500 new records simultaneously. 
 
 In this case, though, I think that is a tradeoff I am willing to live with. 
 
