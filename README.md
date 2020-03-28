@@ -151,7 +151,7 @@ If either `assert` fails, the whole test fails. Because tear down / setup is so 
 This could certainly be done without `pytest`, but I find the conventions make nice to follow.
 
 
-### SO: Will it Do the Trick? ###
+### Conclusion: Will it Do the Trick? ###
 
 I _did_ finally start hitting failures once I started trying to feed it 500 new records. 
 
