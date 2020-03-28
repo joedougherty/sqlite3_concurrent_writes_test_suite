@@ -160,6 +160,19 @@ In this case, though, I think that is a tradeoff I am willing to live with.
 I have increased confidence that my solution will work once put into a real workload scenario. These tests also give me an idea of when I might start seeing failures. In the unlikely scenario that 500+ processes wanted to write to this database at the same time, there would be a potential for data loss.
 
 
+### Using the Code ###
+
+If you would like to run this locally, clone down the repo, install `pytest` in a virtualenv and run `pytest`.
+
+
+    git clone git@github.com:joedougherty/sqlite3_concurrent_writes_test_suite.git
+    cd sqlite3_concurrent_writes_test_suite
+    python3 -m venv venv
+    source venv/bin/activate
+    python -m pip install pytest
+    pytest 
+
+
 ### Further Reading: ###
 
 [multiprocessing.Pool.map documentation](https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool.map)
