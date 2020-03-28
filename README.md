@@ -160,7 +160,7 @@ In this case, though, I think that is a tradeoff I am willing to live with.
 I have increased confidence that my solution will work once put into a real workload scenario. These tests also give me an idea of when I might start seeing failures. In the unlikely scenario that 500+ processes wanted to write to this database at the same time, there would be a potential for data loss.
 
 
-###Further Reading:###
+### Further Reading: ###
 
 [multiprocessing.Pool.map documentation](https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool.map)
 
