@@ -34,7 +34,7 @@ That is: how do we test _multiple invocations_ of this function at the same time
             conn.commit()
 
 
-###multiprocessing: a Pythonic Path to Parallelization###
+### multiprocessing: a Pythonic Path to Parallelization ###
  
 Enter `multiprocessing.Pool.map()`. I'll refer to this as `map()` from here on out.
 
@@ -97,7 +97,7 @@ We now have the ability to:
 
 Time to tie it all together.
 
-###Using pytest to drive###
+### Using pytest to drive ###
 
 `pytest` is a testing framework that is delightfully easy to get started with. 
 
@@ -151,7 +151,7 @@ If either `assert` fails, the whole test fails. Because tear down / setup is so 
 This could certainly be done without `pytest`, but I find the conventions make nice to follow.
 
 
-###SO: Will it Do the Trick?###
+### SO: Will it Do the Trick? ###
 
 I _did_ finally start hitting failures once I started trying to feed it 500 new records. 
 
