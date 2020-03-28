@@ -14,7 +14,7 @@ It *is* possible for 2 or more processes to finish and try to insert records int
 
 How many of these inserts can be handled successfully? What is the upper limit?
 
-Let's ask this question in a more technically rigorous way: How many concurrent 1-record inserts can I run on a local sqlite3 database without throwing `sqlite3.OperationalError: database is locked` exception? 
+Let's ask this question in a more technically rigorous way: How many concurrent 1-record inserts can I run on a local sqlite3 database without throwing the `sqlite3.OperationalError: database is locked` exception? 
 
 That is: how do we test _multiple invocations_ of this function at the same time?
 
