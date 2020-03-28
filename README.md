@@ -148,7 +148,7 @@ If either `assert` fails, the whole test fails. Because tear down / setup is so 
         assert row_count() == 10100
 
 
-This could certainly be done without `pytest`, but I find the conventions make nice to follow.
+This could certainly be done without `pytest`, but I find the conventions make it nice to follow.
 
 
 ### Conclusion: Will it Do the Trick? ###
