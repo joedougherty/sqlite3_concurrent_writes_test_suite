@@ -6,7 +6,7 @@ I do not expect more than 1000 calls to this process per-day.
 
 The schema for the table is simple, the data does not need to be exposed to any other application, and I would like a minimum of connection issues (transient, though they may be). 
 
-How about **sqlite**?
+How about **sqlite3**?
 
 **POTENTIAL PROBLEM: will this support concurrent writes?**
 
@@ -99,7 +99,7 @@ Time to tie it all together.
 
 Each of my tests will be in the form of a function that lives in `test_parallel_writes.py`.
 
-Here's an snippet to demonstrate.
+Here's a snippet to demonstrate.
 
 
     import pytest
