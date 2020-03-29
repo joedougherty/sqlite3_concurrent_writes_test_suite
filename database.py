@@ -1,22 +1,24 @@
 import sqlite3
 
 
-PATH_TO_DB = 'race_condition.sqlite'
+PATH_TO_DB = "race_condition.sqlite"
 
 
 def create_table():
     with sqlite3.connect(PATH_TO_DB) as conn:
         c = conn.cursor()
 
-        c.execute('''DROP TABLE IF EXISTS messages;''')
+        c.execute("""DROP TABLE IF EXISTS messages;""")
         conn.commit()
 
-        c.execute("""
+        c.execute(
+            """
         CREATE TABLE messages (
             ts DATE DEFAULT (datetime('now','localtime')),
             msg TEXT 
         );
-        """)
+        """
+        )
         conn.commit()
 
 
@@ -24,15 +26,15 @@ def insert_row(record):
     with sqlite3.connect(PATH_TO_DB) as conn:
         c = conn.cursor()
 
-        c.execute("""
+        c.execute(
+            """
             INSERT INTO messages 
             (msg) 
             VALUES
             (?);
             """,
-            record
+            record,
         )
-
         conn.commit()
 
 
