@@ -22,15 +22,15 @@ That is: how do we test _multiple invocations_ of this function at the same time
         with sqlite3.connect(PATH_TO_DB) as conn:
             c = conn.cursor()
 
-            c.execute("""
+            c.execute(
+                """
                 INSERT INTO messages 
                 (msg) 
                 VALUES
                 (?);
                 """,
-                record
+                record,
             )
-
             conn.commit()
 
 
@@ -56,16 +56,16 @@ The function `insert_rows_in_parallel` looks like this:
     def insert_rows_in_parallel(args_list):
         num_procs = len(args_list)
 
-        print(f'Spawning {num_procs} processes...')
+        print(f"Spawning {num_procs} processes...")
 
-        pool = Pool(num_procs)
+        pool = multiprocessing.Pool(num_procs)
 
         results = pool.map(insert_row, args_list)
 
         pool.close()
         pool.join()
 
-        print(f'{num_procs} processes complete.')
+        print(f"{num_procs} processes complete.")
 
 
 The size of the `multiprocessing.Pool` is set by the number of elements in args_list. 
@@ -80,12 +80,6 @@ Spawn 50 calls to `insert_row` to simulate 50 processes reporting in simultaneou
 
     insert_rows_in_parallel(test_records)
  
-This is equivalent (and more aesthetically pleasing in the author's opinion):
-
-    insert_rows_in_parallel(
-        generate_example_rows(50)
-    )
-
 There are a few other helper functions to do things like:
 
 * create a fresh db: `database.create_table()`
@@ -107,6 +101,7 @@ Each of my tests will be in the form of a function that lives in `test_parallel_
 
 Here's an snippet to demonstrate.
 
+
     import pytest
 
 
@@ -123,15 +118,12 @@ Here's an snippet to demonstrate.
 
         # Run 5 parallel instances of `insert_rows`
         # by way of `insert_rows_in_parallel`
-        insert_rows_in_parallel(
-            generate_example_rows(5)
-        )
+        insert_rows_in_parallel(generate_example_rows(5))
 
         assert row_count() == 5
 
 
 If either `assert` fails, the whole test fails. Because tear down / setup is so easy, we can simulate that this works with a populated database as well.
-
 
     def test_adding_10000_rows_sequentially_then_100_rows_in_parallel():
         create_table()
@@ -143,9 +135,7 @@ If either `assert` fails, the whole test fails. Because tear down / setup is so 
 
         assert row_count() == 10000
 
-        insert_rows_in_parallel(
-            generate_example_rows(100)
-        )
+        insert_rows_in_parallel(generate_example_rows(100))
 
         assert row_count() == 10100
 
