@@ -4,7 +4,7 @@ import sqlite3
 PATH_TO_DB = "race_condition.sqlite"
 
 
-def create_table():
+def create_table(enable_wal_mode=False):
     with sqlite3.connect(PATH_TO_DB) as conn:
         c = conn.cursor()
 
@@ -20,6 +20,10 @@ def create_table():
             """
         )
         conn.commit()
+
+        if enable_wal_mode:
+            c.execute("""pragma journal_mode=wal;""")
+            conn.commit()
 
 
 def insert_row(record):

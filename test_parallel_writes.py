@@ -61,3 +61,27 @@ def test_adding_10000_rows_sequentially_then_100_rows_in_parallel():
     insert_rows_in_parallel(generate_example_rows(100))
 
     assert row_count() == 10100
+
+
+def test_adding_250_rows_in_parallel_to_new_db_wal_mode_enabled():
+    # After creating the database, enable WAL mode.
+    # https://www.sqlite.org/pragma.html#pragma_journal_mode
+    create_table(enable_wal_mode=True)
+
+    assert row_count() == 0
+
+    insert_rows_in_parallel(generate_example_rows(250))
+
+    assert row_count() == 250
+
+
+def test_adding_500_rows_in_parallel_to_new_db_wal_mode_enabled():
+    # After creating the database, enable WAL mode.
+    # https://www.sqlite.org/pragma.html#pragma_journal_mode
+    create_table(enable_wal_mode=True)
+
+    assert row_count() == 0
+
+    insert_rows_in_parallel(generate_example_rows(500))
+
+    assert row_count() == 500

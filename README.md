@@ -152,6 +152,50 @@ In this case, though, I think that is a tradeoff I am willing to live with.
 I have increased confidence that my solution will work once put into a real workload scenario. These tests also give me an idea of when I might start seeing failures. In the unlikely scenario that 500+ processes wanted to write to this database at the same time, there would be a potential for data loss.
 
 
+### BONUS SECTION: Enabling / Testing WAL Mode ###
+
+
+After writing this, I learned the sqlite3 supports a WAL mode: 
+
+Here are some reasons to give it a try, straight from the [sqlite3 documentation](https://www.sqlite.org/wal.html):
+
+    
+    There are advantages and disadvantages to using WAL instead of a rollback journal. Advantages include:
+
+    * WAL is significantly faster in most scenarios.
+    * WAL provides more concurrency as readers do not block writers and a writer does not block readers. Reading and writing can proceed concurrently.
+    * Disk I/O operations tends to be more sequential using WAL.
+    * WAL uses many fewer fsync() operations and is thus less vulnerable to problems on systems where the fsync() system call is broken
+
+
+Enabling WAL mode is straightforward. I added an optional argument to `create_database`. The implementation now looks like:
+
+
+    def create_table(enable_wal_mode=False):
+        with sqlite3.connect(PATH_TO_DB) as conn:
+            c = conn.cursor()
+
+            c.execute("""DROP TABLE IF EXISTS messages;""")
+            conn.commit()
+
+            c.execute(
+                """
+                CREATE TABLE messages (
+                    ts DATE DEFAULT (datetime('now','localtime')),
+                    msg TEXT 
+                );
+                """
+            )
+            conn.commit()
+
+            if enable_wal_mode:
+                c.execute("""pragma journal_mode=wal;""")
+                conn.commit()
+
+
+As I understand it, WAL mode mostly helps with concurrent _reads_. My testing showed I wasn't able to succesfully insert more rows in parallel using WAL mode than without. Still something to be cognizant of.
+
+
 ### Using the Code ###
 
 If you would like to run this locally, clone down the repo, install `pytest` in a virtualenv and run `pytest`.
@@ -170,3 +214,5 @@ If you would like to run this locally, clone down the repo, install `pytest` in 
 [multiprocessing.Pool.map documentation](https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool.map)
 
 [https://www.sqlite.org/cgi/src/doc/begin-concurrent/doc/begin_concurrent.md](https://www.sqlite.org/cgi/src/doc/begin-concurrent/doc/begin_concurrent.md)
+
+[https://charlesleifer.com/blog/going-fast-with-sqlite-and-python/](https://charlesleifer.com/blog/going-fast-with-sqlite-and-python/)
