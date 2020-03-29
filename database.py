@@ -13,11 +13,11 @@ def create_table():
 
         c.execute(
             """
-        CREATE TABLE messages (
-            ts DATE DEFAULT (datetime('now','localtime')),
-            msg TEXT 
-        );
-        """
+            CREATE TABLE messages (
+                ts DATE DEFAULT (datetime('now','localtime')),
+                msg TEXT 
+            );
+            """
         )
         conn.commit()
 
