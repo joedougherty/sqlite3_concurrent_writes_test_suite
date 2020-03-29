@@ -49,7 +49,7 @@ According to its Python3.6 docstring:
 
 The iterable `args_list` is a list of one-element tuples. Each tuple contains a serialized UUID4 that will be inserted into the sqlite3 db in the `msg` column.
 
-The call to `map()` spawns the parallel processes and returns the results in a list, one-per-process.
+The call to `map()` spawns the parallel processes and returns the results in a list, one item per process.
 
 The function `insert_rows_in_parallel` looks like this:
 
