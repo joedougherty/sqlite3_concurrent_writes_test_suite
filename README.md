@@ -196,6 +196,27 @@ Enabling WAL mode is straightforward. I added an optional argument to `create_da
 As I understand it, WAL mode mostly helps with concurrent _reads_. My testing showed I wasn't able to succesfully insert more rows in parallel using WAL mode than without. Still something to be cognizant of.
 
 
+### DOUBLE-PLUS EXTRA BONUS SECTION: Parallelization using concurrent.futures ###
+
+It's worth knowing there is _at least_ one more way of leveraging multiprocessing in the standard library: `concurrent.futures`.
+
+I'll be using the `ProcessPoolExecutor` class to manage parallel execution like so:
+
+
+    def insert_rows_in_parallel_cf(args_list):
+        num_procs = len(args_list)
+
+        print(f"Spawning {num_procs} processes...")
+
+        with concurrent.futures.ProcessPoolExecutor(max_workers=num_procs) as executor:
+            executor.map(insert_row, args_list)
+
+        print(f"{num_procs} processes complete.")
+
+
+That's one tidy API! Just another tool to consider when you need parallel execution.
+
+
 ### Using the Code ###
 
 If you would like to run this locally, clone down the repo, install `pytest` in a virtualenv and run `pytest`.

@@ -1,3 +1,4 @@
+import concurrent.futures
 import multiprocessing
 import uuid
 
@@ -16,6 +17,17 @@ def insert_rows_in_parallel(args_list):
 
     pool.close()
     pool.join()
+
+    print(f"{num_procs} processes complete.")
+
+
+def insert_rows_in_parallel_cf(args_list):
+    num_procs = len(args_list)
+
+    print(f"Spawning {num_procs} processes...")
+
+    with concurrent.futures.ProcessPoolExecutor(max_workers=num_procs) as executor:
+        executor.map(insert_row, args_list)
 
     print(f"{num_procs} processes complete.")
 

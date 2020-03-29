@@ -2,7 +2,11 @@ import pytest
 
 
 from database import create_table, row_count, insert_row
-from utils import insert_rows_in_parallel, generate_example_rows
+from utils import (
+    insert_rows_in_parallel,
+    insert_rows_in_parallel_cf,
+    generate_example_rows,
+)
 
 
 def test_adding_5_rows_in_parallel_to_new_db():
@@ -35,6 +39,16 @@ def test_adding_250_rows_in_parallel_to_new_db():
     assert row_count() == 0
 
     insert_rows_in_parallel(generate_example_rows(250))
+
+    assert row_count() == 250
+
+
+def test_adding_250_rows_in_parallel_to_new_db_cf():
+    create_table()
+
+    assert row_count() == 0
+
+    insert_rows_in_parallel_cf(generate_example_rows(250))
 
     assert row_count() == 250
 
