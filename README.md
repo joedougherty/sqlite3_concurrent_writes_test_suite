@@ -237,3 +237,4 @@ If you would like to run this locally, clone down the repo, install `pytest` in 
 [https://www.sqlite.org/cgi/src/doc/begin-concurrent/doc/begin_concurrent.md](https://www.sqlite.org/cgi/src/doc/begin-concurrent/doc/begin_concurrent.md)
 
 [https://charlesleifer.com/blog/going-fast-with-sqlite-and-python/](https://charlesleifer.com/blog/going-fast-with-sqlite-and-python/)
+
