@@ -155,7 +155,7 @@ I have increased confidence that my solution will work once put into a real work
 ### BONUS SECTION: Enabling / Testing WAL Mode ###
 
 
-After initially publishing this, I learned the sqlite3 supports a WAL mode.
+After initially publishing this, I learned the sqlite3 supports a WAL (Write-Ahead Logging) mode.
 
 Here are some reasons to give it a try, straight from the [sqlite3 documentation](https://www.sqlite.org/wal.html):
 
