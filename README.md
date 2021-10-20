@@ -1,4 +1,4 @@
-## Simultating concurrent writes to sqlite3 with multiprocessing and pytest ##
+## Simulating concurrent writes to sqlite3 with multiprocessing and pytest ##
 
 I have a frequently-called process that I would like to record some metrics about. I've decided that the process will report its metrics once it has completed its main tasks. 
 
